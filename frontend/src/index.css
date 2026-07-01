@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0B0F19;
+  --color-panel: rgba(255, 255, 255, 0.03);
+  --color-panel-border: rgba(255, 255, 255, 0.05);
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-slate-200 antialiased overflow-x-hidden min-h-screen selection:bg-emerald-500/30;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
+  }
+  
+  .glass-panel-hover {
+    @apply hover:bg-white/10 transition-colors duration-300;
+  }
+
+  .glow-safe {
+    @apply drop-shadow-[0_0_15px_rgba(16,185,129,0.3)];
+  }
+  
+  .glow-warning {
+    @apply drop-shadow-[0_0_15px_rgba(245,158,11,0.3)];
+  }
+
+  .glow-critical {
+    @apply drop-shadow-[0_0_15px_rgba(244,63,94,0.3)];
+  }
+
+  .cyber-bg {
+    background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 100%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+  }
+}

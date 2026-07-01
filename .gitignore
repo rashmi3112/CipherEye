@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Backend secrets and credentials
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/service_account.json
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
