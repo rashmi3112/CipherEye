@@ -21,6 +21,16 @@ class PIIAgent:
             # Note: In a production app, this loading step is heavy and should be done once
             # at startup rather than per-request. Since this is the agent init, we instantiate it once.
             try:
+                # Self-healing: auto-download spaCy model if missing
+                try:
+                    import spacy
+                    if not spacy.util.is_package("en_core_web_sm"):
+                        logger.info("spaCy model 'en_core_web_sm' not found. Downloading...")
+                        from spacy.cli import download
+                        download("en_core_web_sm")
+                except Exception as spacy_err:
+                    logger.error(f"Error checking or downloading spaCy model: {spacy_err}")
+
                 from presidio_analyzer.nlp_engine import NlpEngineProvider
                 configuration = {
                     "nlp_engine_name": "spacy",

@@ -1,0 +1,35 @@
+# Exclude venvs and python cache
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+**/*.pyd
+**/.venv/
+**/venv/
+**/env/
+**/.pytest_cache/
+
+# Exclude git metadata
+.git/
+.gitignore
+.gitattributes
+
+# Exclude local configs and secrets
+**/.env
+**/.env.*
+backend/service_account.json
+
+# Exclude Node/frontend local files and output (will rebuild inside docker)
+**/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# Exclude system/IDE configs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/
+.agents/
+AGENTS.md
+SKILL.md

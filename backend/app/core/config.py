@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     Loads settings from environment variables or a .env file.
     """
     # API Keys
-    gemini_api_key: str
+    gemini_api_key: Optional[str] = None
     
     # Environment config
     environment: str = "development"
