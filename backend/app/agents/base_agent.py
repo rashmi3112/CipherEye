@@ -88,13 +88,21 @@ class BaseAgent:
         has_chase = any(kw in prompt_lower for kw in ["chase", "frozen", "2,847", "2847", "4521", "transaction", "unfreeze", "1 hour"])
 
         if agent_name in ["TextAgent", "URLAgent"]:
-            # Default fallback mock response
-            res = {
-                "findings": ["Uses urgent or threatening language.", "Request to verify account credentials via an external link.", "Lack of personalization or direct contact information."],
-                "threat_categories": ["phishing", "scam"],
-                "risk_level": "high",
-                "confidence": 0.85
-            }
+            if agent_name == "URLAgent":
+                res = {
+                    "findings": ["Uses a typosquatted domain to mimic a legitimate service.", "The server hosting the site has suspicious reputation marks.", "Requesting sensitive credentials on an unverified host."],
+                    "threat_categories": ["phishing", "scam"],
+                    "risk_level": "high",
+                    "confidence": 0.85
+                }
+            else:
+                # Default fallback mock response
+                res = {
+                    "findings": ["Uses urgent or threatening language.", "Request to verify account credentials via an external link.", "Lack of personalization or direct contact information."],
+                    "threat_categories": ["phishing", "scam"],
+                    "risk_level": "high",
+                    "confidence": 0.85
+                }
             if has_paypal:
                 res = {
                     "findings": [
@@ -160,26 +168,27 @@ class BaseAgent:
             return json.dumps(res)
 
         elif agent_name == "ReportAgent":
+            is_url = "url" in prompt_lower or "http" in prompt_lower or "<url>" in prompt_lower
             res = {
-                "summary": "This message is a high-risk security threat. It uses urgent or alarming tone and directs you to an unverified external link to verify your account or security details, which is a classic phishing signature.",
+                "summary": "This URL is a high-risk security threat. It directs to an unverified or typosquatted domain designed to mimic legitimate financial or organizational portals.",
                 "recommendations": [
-                    "Do not click any links or download attachments.",
-                    "Report the message to your network administrator.",
-                    "Do not reply to the sender."
+                    "Do not visit the URL or enter any personal information.",
+                    "Block the domain on your network firewall.",
+                    "Report the URL to anti-phishing organizations."
                 ]
             }
             if has_paypal:
                 res = {
-                    "summary": "This email is a critical threat attempting to impersonate PayPal. It uses a deceptive sender address and redirects you to a fraudulent website in order to steal your sensitive credentials (SSN, credit card, and banking password).",
+                    "summary": f"This {'URL/website' if is_url else 'email'} is a critical threat attempting to impersonate PayPal. It uses a deceptive address and redirects you to a fraudulent website in order to steal your sensitive credentials (SSN, credit card, and banking password).",
                     "recommendations": [
                         "Do not click the link or enter any information.",
-                        "Mark the email as spam and delete it immediately.",
+                        "Mark the message as spam and delete it immediately.",
                         "Report the attempt to PayPal's official security team."
                     ]
                 }
             elif has_chase:
                 res = {
-                    "summary": "This SMS/message is a critical phishing attempt masquerading as Chase Bank. It attempts to induce panic by claiming your account is frozen due to a fake $2,847 transaction, urging you to call an unverified number or visit a phishing link.",
+                    "summary": f"This {'URL/website' if is_url else 'SMS/message'} is a critical phishing attempt masquerading as Chase Bank. It attempts to induce panic by claiming your account is frozen due to a fake $2,847 transaction, urging you to call an unverified number or visit a phishing link.",
                     "recommendations": [
                         "Do not visit the URL or call the phone number.",
                         "Delete the message immediately.",
@@ -188,10 +197,10 @@ class BaseAgent:
                 }
             elif "safe" in prompt_lower or "low" in prompt_lower:
                 res = {
-                    "summary": "No active cyber threats or malicious patterns were identified in the analyzed content. The message appears to be safe.",
+                    "summary": f"No active cyber threats or malicious patterns were identified in the analyzed {'URL' if is_url else 'content'}. The input appears to be safe.",
                     "recommendations": [
                         "No action is required.",
-                        "Continue to practice general email security hygiene."
+                        "Continue to practice general security hygiene."
                     ]
                 }
             return json.dumps(res)

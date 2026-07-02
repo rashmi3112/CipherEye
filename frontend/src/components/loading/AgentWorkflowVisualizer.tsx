@@ -25,7 +25,7 @@ export const AgentWorkflowVisualizer: React.FC = () => {
     if (currentStepIndex < steps.length - 1) {
       const timer = setTimeout(() => {
         setCurrentStepIndex(prev => prev + 1);
-      }, 1500); // Progress every 1.5 seconds for visual effect
+      }, 900); // Progress every 900ms to complete within the 4s UX budget
       return () => clearTimeout(timer);
     }
   }, [currentStepIndex]);

@@ -34,7 +34,7 @@ class AgentOrchestrator:
         detected_pii = []
         safe_content = sanitized_content
         
-        if request.content_type in [ContentType.TEXT, ContentType.EMAIL, ContentType.URL]:
+        if request.content_type in [ContentType.TEXT, ContentType.EMAIL]:
             pii_result = self.pii_agent.analyze_and_mask(sanitized_content)
             safe_content = pii_result.get("masked_text", sanitized_content)
             detected_pii = pii_result.get("detected_pii", [])
