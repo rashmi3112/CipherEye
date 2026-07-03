@@ -8,7 +8,7 @@ app_port: 7860
 
 CipherEye is an end-to-end AI cybersecurity threat analysis platform that uses a **multi-agent system powered by Google Gemini** to investigate URLs, text messages, emails, and images for phishing campaigns, social engineering attacks, and PII exposure — and returns a structured, human-readable investigation report with a trust score.
 
-🔗 **Live Demo (Hugging Face Spaces):** [rashmiunhale/ciphereye]((https://rashmiunhale-ciphereye.hf.space/))
+🔗 **Live Demo (Hugging Face Spaces):** [rashmiunhale/ciphereye](https://rashmiunhale-ciphereye.hf.space/)
 
 ---
 
